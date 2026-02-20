@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 YaBrowser/24.10.0.0 Safari/537.36" version="25.0.3">
+  <diagram name="Ishikawa Diagram" id="ishikawa">
+    <mxGraphModel dx="1420" dy="810" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="head" value="Узкие места при миграции" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="infra" value="Инфраструктура" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="200" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="infra-line" style="endArrow=none;html=1;" parent="1" source="head" target="infra" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="230" as="sourcePoint" />
+            <mxPoint x="300" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="infra1" value="Недостаточная мощность сервера" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="150" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="infra-line1" style="endArrow=none;html=1;" parent="1" source="infra" target="infra1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="infra2" value="Риски сети (без VPN)" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="250" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="infra-line2" style="endArrow=none;html=1;" parent="1" source="infra" target="infra2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sw" value="Программное обеспечение" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="600" y="200" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-line" style="endArrow=none;html=1;" parent="1" source="head" target="sw" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="230" as="sourcePoint" />
+            <mxPoint x="600" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sw1" value="Несовместимость 1С с API" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="750" y="150" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-line1" style="endArrow=none;html=1;" parent="1" source="sw" target="sw1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sw2" value="Потеря данных Excel" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="750" y="250" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-line2" style="endArrow=none;html=1;" parent="1" source="sw" target="sw2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="int" value="Интеграция" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="400" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="int-line" style="endArrow=none;html=1;" parent="1" source="head" target="int" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="330" as="sourcePoint" />
+            <mxPoint x="300" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="int1" value="Разрывы в API" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="350" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="int-line1" style="endArrow=none;html=1;" parent="1" source="int" target="int1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="int2" value="Отсутствие шифрования" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="450" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="int-line2" style="endArrow=none;html=1;" parent="1" source="int" target="int2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pers" value="Персонал" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="600" y="400" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pers-line" style="endArrow=none;html=1;" parent="1" source="head" target="pers" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="330" as="sourcePoint" />
+            <mxPoint x="600" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pers1" value="Недостаток навыков" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="750" y="350" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pers-line1" style="endArrow=none;html=1;" parent="1" source="pers" target="pers1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="proc" value="Процессы" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="500" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="proc-line" style="endArrow=none;html=1;" parent="1" source="head" target="proc" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="360" as="sourcePoint" />
+            <mxPoint x="450" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="proc1" value="Ручные процессы" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="550" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="proc-line1" style="endArrow=none;html=1;" parent="1" source="proc" target="proc1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="proc2" value="Риски downtime" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="500" y="550" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="proc-line2" style="endArrow=none;html=1;" parent="1" source="proc" target="proc2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
