@@ -1,0 +1,74 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Пациент" as Patient
+actor "Врач" as Doctor
+actor "Администратор" as Admin
+
+entity "Зашифрованное хранилище" as Vault {
+  [Медкарта_пациента.pdf #PHI]
+  [Заключение_врача.docx #PHI]
+  [Назначения.xlsx #PHI]
+}
+
+database "Система аудита" as AuditLog
+database "RBAC-сервер" as RBAC
+
+rectangle "Приём у врача" {
+  action [1. Проверка роли] as RoleCheck
+  action [2. Запрос медкарты] as RequestCard
+  action [3. Просмотр и редактирование] as ViewEdit
+  action [4. Сохранение с аудитом] as SaveAudit
+}
+
+Patient --> Doctor : Обращение, жалобы
+Doctor --> RoleCheck : Аутентификация
+RoleCheck --> RBAC : Проверка прав (роль "Врач")
+RBAC --> RoleCheck : Подтверждение
+RoleCheck --> RequestCard : Разрешение на доступ
+RequestCard --> Vault : Запрос медкарты
+Vault --> AuditLog : Логирование запроса
+AuditLog --> Vault : Подтверждение записи
+Vault --> ViewEdit : Открытие медкарты (с шифрованием)
+ViewEdit --> ViewEdit : Диагностика, назначения
+ViewEdit --> SaveAudit : Сохранение результатов
+SaveAudit --> Vault : Сохранение в PDF/DOCX с тегом #PHI
+SaveAudit --> AuditLog : Запись: "Врач Иванов открыл карту Пациента_123"
+
+note right of RBAC
+  <b>Централизованное управление ролями</b>
+  Назначение прав по должности
+  Роли:
+  - Врач
+  - Администратор
+  - Бухгалтер
+end note
+
+note right of Vault
+  Все файлы:
+  - Шифруются при хранении
+  - Помечаются тегом #PHI
+  - Недоступны без аутентификации
+end note
+
+note right of AuditLog
+  <b>Журнал аудита</b>
+  Фиксирует:
+  • Кто открыл файл
+  • Когда (дата/время)
+  • Какой файл (#PHI)
+  • С какого рабочего места
+  Хранение: 3 года (по ФЗ-152)
+  Доступ: только администратор безопасности
+
+  Полный журнал:
+  - Дата/время
+  - IP-адрес
+  - Действие (чтение, запись)
+  - Используется при проверках
+end note
+
+title "Приём у врача"
+footer Источник: "Медикаменте" | Версия: 1.0
+@enduml

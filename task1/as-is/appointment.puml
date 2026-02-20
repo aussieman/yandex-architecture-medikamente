@@ -1,0 +1,34 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Пациент" as Patient
+actor "Врач" as Doctor
+actor "Администратор" as Admin4
+
+entity "Файловый сервер" as Server {
+    [Медкарта_пациента.pdf]
+    [Заключение_врача.docx]
+    [Назначения.xlsx]
+    [Результаты_анализов1.pdf]
+    [Результаты_анализов2.jpg]
+    [Результаты_анализовXXX.pdf]
+}
+
+rectangle "Приём у врача" {
+    Patient --> Doctor : Обращение, жалобы
+    Doctor --> Server : Открывает медкарту
+    Doctor --> Doctor : Диагностика
+    Doctor --> Server : Сохраняет заключение и назначения
+    Doctor --> Admin4 : Передаёт назначения на анализы
+}
+
+note right of Doctor
+  Доступ к папке пациента без проверки прав
+  Нет аудита открытия файлов
+end note
+
+note right of Server
+  Медицинские данные (PHI) — в открытом виде
+end note
+@enduml
