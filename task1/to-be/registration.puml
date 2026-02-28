@@ -1,0 +1,58 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+skinparam sequenceMessageAlign center
+
+actor "Пациент" as Patient
+actor "Администратор" as Admin 
+
+entity "Зашифрованное хранилище" as Vault {
+  [Patients.xlsx #PII]
+  [Анкета_пациента.pdf #PII]
+}
+
+database "Система управления согласиями" as ConsentDB
+
+rectangle "Регистрация пациента" {
+  action [1. Ввод данных] as InputData
+  action [2. Проверка согласия] as CheckConsent
+  action [3. Сохранение и тегирование] as SaveTag
+}
+
+Patient --> InputData : ФИО, телефон, email\n(устно или в анкете)
+InputData --> Admin : Отображение данных\n(с маскировкой email/телефона)
+Admin --> CheckConsent : Запрос на проверку согласия
+CheckConsent --> ConsentDB : Поиск согласия по ФИО/телефону
+ConsentDB --> CheckConsent : Ответ: есть / нет
+CheckConsent --> SaveTag : Подтверждение обработки
+SaveTag --> Vault : Сохранение в Excel/PDF\nс тегами #PII, #Consent
+SaveTag --> ConsentDB : Логирование нового согласия
+
+note left of InputData
+  Данные вводятся в защищённую форму
+  Поля с PII помечаются автоматически
+end note
+
+note right of SaveTag
+  Применяется:
+  - Шифрование файла (AES-256)
+  - Тегирование метаданных
+  - Аудит операции
+end note
+
+note right of Vault
+  Доступ только по ролям
+  Шифрование at rest
+end note
+
+note bottom of ConsentDB
+  <b>Consent_Log.db</b>
+  Хранение согласий:
+  - Дата
+  - Подпись (скан)
+  - Право на отзыв
+end note
+
+title "Регистрация пациента"
+footer Источник: "Медикаменте" | Версия: 1.0
+@enduml

@@ -1,0 +1,65 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Пациент" as Patient
+actor "Кассир" as Cashier
+actor "Бухгалтер" as Accountant
+
+component KKT [
+  ККМ
+    Генерация чека
+    Поддержка ФФД 1.2
+]
+
+component OneC [
+  1С:Бухгалтерия
+    Серверный режим (SQL)
+    HTTPS API
+]
+
+database "Зашифрованное хранилище" as Vault
+
+rectangle "Учёт платежей" {
+  action [1. Оплата] as Payment
+  action [2. Передача данных в 1С] as Transfer
+  action [3. Синхронизация и аудит] as SyncAudit
+}
+
+Patient --> Cashier : Оплата (наличные/карта)
+Cashier --> KKT : Транзакция
+KKT --> KKT : Генерация чека
+KKT --> Transfer : Отправка данных через HTTPS (TLS 1.3)
+Transfer --> OneC : API-вызов с шифрованием
+OneC --> Vault : Сохранение .1CD (шифрован)
+SyncAudit --> OneC : Запрос отчёта
+SyncAudit --> Accountant : Отображение данных\n(с маскировкой сумм)
+
+note right of KKT
+  Отправка данных:
+  - Только по HTTPS
+  - Аутентификация по API-ключу
+end note
+
+note right of OneC
+  Перевод на серверный режим:
+  - Централизованный доступ
+  - Поддержка аудита
+  - Резервное копирование
+end note
+
+note right of Vault
+  <b>Чеки_Excel.xlsx #Finance</b>
+  .1CD файл (зашифрован)
+  Резервная копия — ежедневно, с шифрованием
+end note
+
+note right of SyncAudit
+  Бухгалтер видит:
+  - Обобщённые суммы
+  - Маскированные данные пациентов
+end note
+
+title "Учёт платежей"
+footer Источник: "Медикаменте" | Версия: 1.0
+@enduml

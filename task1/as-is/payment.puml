@@ -1,0 +1,40 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Пациент" as Patient
+actor "Кассир" as Cashier
+actor "Администратор" as Admin3
+
+component KKT[
+  ККМ
+    Генерация чека
+]
+
+entity "Файловый сервер" as Server {
+    [Чеки_Excel.xlsx]
+}
+
+component OneC [
+  1С:Бухгалтерия
+    Файловый режим
+]
+
+rectangle "Учёт платежей" {
+    Patient --> Cashier : Оплата наличными/картой
+    Cashier --> KKT : Транзакция
+    KKT --> Cashier : Чек
+    Cashier --> Admin3 : Передаёт чек
+    Admin3 --> Server : Вносит в Excel
+    Admin3 --> OneC : Передаёт данные (OLE/TCP)
+    OneC --> Server : Сохраняет в файл .1CD
+}
+
+note right of KKT
+  Передача в 1С — без шифрования
+end note
+
+note right of OneC
+  Файловый режим → риск повреждения
+end note
+@enduml

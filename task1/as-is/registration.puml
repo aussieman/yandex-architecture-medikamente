@@ -1,0 +1,26 @@
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Пациент" as Patient
+actor "Администратор" as Admin
+
+entity "Файловый сервер" as Server {
+    [Patients.xlsx]
+    [Анкета_пациента.pdf]
+}
+
+rectangle "Регистрация пациента" {
+    Patient --> Admin : ФИО, телефон, email\n(устно или в анкете)
+    Admin --> Server : Сохраняет в Excel и PDF
+}
+
+note right of Admin
+  Ввод данных вручную
+end note
+
+note right of Server
+  Хранение: открытое
+  Доступ: все сотрудники ресепшена
+end note
+@enduml

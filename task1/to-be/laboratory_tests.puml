@@ -1,0 +1,57 @@
+
+@startuml
+allowmixing
+skinparam componentStyle rectangle
+
+actor "Лаборатория" as Lab
+actor "Администратор" as Admin
+
+entity "Зашифрованное хранилище" as Vault {
+  [RegistryByDate.xlsx #PHI]
+  [Data file - Пациент.pdf #PHI]
+  [Результаты_анализов.jpg #PHI]
+}
+
+database "DLP-система" as DLP
+
+rectangle "Учёт лабораторных результатов" {
+  action [1. Получение результатов] as ReceiveResults
+  action [2. Сканирование и тегирование] as ScanTag
+  action [3. Сохранение в реестр] as SaveToRegistry
+}
+
+Lab --> ReceiveResults : Передаёт бумажные результаты
+ReceiveResults --> ScanTag : Передача документов
+ScanTag --> ScanTag : Сканирование в PDF/JPG
+ScanTag --> ScanTag : Автоматическое тегирование #PHI
+ScanTag --> Vault : Сохранение в папку пациента
+ScanTag --> SaveToRegistry : Передача данных для реестра
+SaveToRegistry --> Vault : Добавляет в RegistryByDate.xlsx
+SaveToRegistry --> DLP : Запрос на проверку экспорта
+
+note left of ScanTag
+  Система автоматически:
+  - Распознаёт тип документа (анализ)
+  - Применяет тег #PHI
+  - Шифрует при сохранении
+end note
+
+note right of Vault
+  Доступ только у:
+  - Врачей
+  - Администраторов с доступом к лаборатории
+end note
+
+note right of DLP
+  <b>Мониторинг тегов #PHI</b>
+  Блокировка копирования
+
+  Если файл помечен #PHI:
+  - Запрещается копирование в буфер
+  - Блокируется отправка по email
+  - Требуется двухфакторное подтверждение
+end note
+
+title "Учёт лабораторных результатов"
+footer Источник: "Медикаменте" | Версия: 1.0
+@enduml
